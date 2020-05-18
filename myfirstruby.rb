@@ -3,32 +3,32 @@ class MegaGreeter
   
     # Create the object
     def initialize(names = "World")
-      @names = names
+      @namesObj = names
     end
   
     # Say hi to everybody
     def say_hi
-      if @names.nil?
+      if @namesObj.nil?
         puts "..."
-      elsif @names.respond_to?("each")
+      elsif @namesObj.respond_to?("each")
         # @names is a list of some kind, iterate!
-        @names.each do |name|
+        @namesObj.each do |name|
           puts "Hello #{name}!"
         end
       else
-        puts "Hello #{@names}!"
+        puts "Hello #{@namesObj}!"
       end
     end
   
     # Say bye to everybody
     def say_bye
-      if @names.nil?
+      if @namesObj.nil?
         puts "..."
-      elsif @names.respond_to?("join")
+      elsif @namesObj.respond_to?("join")
         # Join the list elements with commas
-        puts "Goodbye #{@names.join(", ")}.  Come back soon!"
+        puts "Goodbye #{@namesObj.join(", ")}.  Come back soon!"
       else
-        puts "Goodbye #{@names}.  Come back soon!"
+        puts "Goodbye #{@namesObj}.  Come back soon!"
       end
     end
   end
