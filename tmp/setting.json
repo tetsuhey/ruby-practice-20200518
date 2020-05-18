@@ -1,7 +1,7 @@
 {
-    "URL" : "https://www.google.com",
-    "id" : "",
-    "pass" : "",
+    "URL" : "https://www.i-barms.net/ibarms/Login.do",
+    "id" : "admin_wo01",
+    "pass" : "ws202004",
     "target_file_name" : "",
     "download_dir" : "./tmp/"
 }
