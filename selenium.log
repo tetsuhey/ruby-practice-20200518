@@ -1,1 +1,5 @@
 # Logfile created on 2020-05-18 22:06:47 +0900 by logger.rb/v1.4.2
+2020-05-19 15:47:46 WARN Selenium [DEPRECATION] Selenium::WebDriver::Error::InvalidElementStateError is deprecated. Use Selenium::WebDriver::Error::ElementNotInteractableError (ensure the driver supports W3C WebDriver specification) instead.
+2020-05-19 15:50:42 WARN Selenium [DEPRECATION] Selenium::WebDriver::Error::InvalidElementStateError is deprecated. Use Selenium::WebDriver::Error::ElementNotInteractableError (ensure the driver supports W3C WebDriver specification) instead.
+2020-05-19 15:52:03 WARN Selenium [DEPRECATION] Selenium::WebDriver::Error::InvalidElementStateError is deprecated. Use Selenium::WebDriver::Error::ElementNotInteractableError (ensure the driver supports W3C WebDriver specification) instead.
+2020-05-19 15:53:14 WARN Selenium [DEPRECATION] Selenium::WebDriver::Error::InvalidElementStateError is deprecated. Use Selenium::WebDriver::Error::ElementNotInteractableError (ensure the driver supports W3C WebDriver specification) instead.
