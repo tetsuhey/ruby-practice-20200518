@@ -1,5 +1,6 @@
 require 'json'
 require 'selenium-webdriver'
+require './selenium_controller'
 
 
 SETTING_FILE_PATH = "./tmp/"
@@ -42,10 +43,12 @@ Selenium::WebDriver.logger.level = :warn
 driver = Selenium::WebDriver.for :chrome
 driver.manage.timeouts.implicit_wait = @timeout
 wait_reading = Selenium::WebDriver::Wait.new(timeout: @wait_time)
+p driver.manage.timeouts
 
 # Yahooを開く
 driver.get(sf["URL"])
-
+return
+driver.quit
 #**
   # 検索欄/検索ボタン取得
   begin
