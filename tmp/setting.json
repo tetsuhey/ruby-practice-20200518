@@ -1,7 +1,7 @@
 {
-    "URL" : "TARGET_URL",
-    "id" : "YOUR_PASS",
-    "pass" : "YOUR_ID",
-    "target-m" : "YYYY/MM",
-    "target-d" : "YYYY/MM/DD"
+    "URL" : "https://www.i-barms.net/ibarms/Login.do",
+    "id" : "admin_wo01",
+    "pass" : "ws202004",
+    "target-m" : "2020/01",
+    "target-d" : "2020/05/01"
 }

@@ -1,11 +1,14 @@
 YEALY_BTN_CLASS_NAME = "button.yearly-btn" #年報ボタン
 MONTHLY_BTN_CLASS_NAME = "button.monthly-btn" #月報ボタン
+
+SYUKEI_BTN_CLASS_NAME = "a#aggregateBtn" #集計ボタン
     
 URIAGE_BTN_CLASS_NAME = "button#saleAggreBtn" #売上集計ボタン
 SYASHITUBETSU_BTN_CLASS_NAME = "button#roomSaleBtn" #車室別ボタン
 JIKANTAI_BTN_CLASS_NAME = "button#timeSaleBtn" #時間帯別ボタン
 YOUBI_BTN_CLASS_NAME = "button#dayOfTheWeekSalesBtn" #曜日別ボタン
 CYUSYAJIKAN_BTN_CLASS_NAME = "button#timeAmountBtn" #駐車時間帯別ボタン
+SERVICEINFO_BTN_CLASS_NAME = "button#serviceInfoBtn" #サービス券ボタン
 
 SYUKEIBI_Y_START_TXT_CLASS_NAME = "input#chooseOneMonI" #集計開始日選択(年報)
 SYUKEIBI_M_START_TXT_CLASS_NAME = "input#chooseOneStartDateIM" #集計開始日選択(月報)
@@ -15,8 +18,9 @@ SHOW_GRAPH_BTN_CLASS_NAME = "button#graphButton" #グラフ表示ボタン
 
 class ParkingElems
 
-    def initialize(browser)
+    def initialize(browser, isFlap = nil)
         @browser = browser
+        @isFlap = isFlap
     end
 
     def find_savePDF_btn
@@ -51,24 +55,19 @@ class ParkingElems
     #**
     #年報の取得
     def getNenpou(attr)
-        begin
-            @browser.find(YEALY_BTN_CLASS_NAME).click #年報ボタンクリック
-            @browser.find(URIAGE_BTN_CLASS_NAME).click #売上集計ボタンをクリック
-            @browser.find(SYUKEIBI_Y_START_TXT_CLASS_NAME).send_keys(attr[:date])#請求開始の日付を入力
-            unless @browser.find(SEIKYU_BTN_CLASS_NAME).selected?
-                @browser.find(SEIKYU_BTN_CLASS_NAME).click #請求にチェック
-            end
-            
-            @browser.find(SHOW_GRAPH_BTN_CLASS_NAME).click #グラフ表示ボタンクリック
-
-            unless pdf_download
-                p "PDFの保存に失敗しました"
-                return false
-            end
-        rescue => exception
-            p exception.class 
+        @browser.find(SYUKEI_BTN_CLASS_NAME).click #集計ボタンクリック
+        @browser.find(YEALY_BTN_CLASS_NAME).click #年報ボタンクリック
+        @browser.find(URIAGE_BTN_CLASS_NAME).click #売上集計ボタンをクリック
+        @browser.find(SYUKEIBI_Y_START_TXT_CLASS_NAME).send_keys(attr[:date])#請求開始の日付を入力
+        unless @browser.find(SEIKYU_BTN_CLASS_NAME).selected?
+            @browser.find(SEIKYU_BTN_CLASS_NAME).click #請求にチェック
+        end
+        @browser.find(SHOW_GRAPH_BTN_CLASS_NAME).click #グラフ表示ボタンクリック
+        unless pdf_download
+            p "PDFの保存に失敗しました"
             return false
         end
+        sleep 2
     end
 
 
@@ -77,13 +76,18 @@ class ParkingElems
     #月報の取得
     def getGeppou(attr)
         begin
+            @browser.find(SYUKEI_BTN_CLASS_NAME).click #集計ボタンクリック
             @browser.find(MONTHLY_BTN_CLASS_NAME).click #月報ボタンクリック
-
             case attr[:mode]
             when "売上"
                 @browser.find(URIAGE_BTN_CLASS_NAME).click #売上集計ボタンをクリック
             when "車室"
-                @browser.find(SYASHITUBETSU_BTN_CLASS_NAME).click #車室別ボタンをクリック
+                if(@isFlap)
+                    @browser.find(SYASHITUBETSU_BTN_CLASS_NAME).click #車室別ボタンをクリック
+                else
+                    sleep 2
+                    return false 
+                end
             when "時間帯"
                 @browser.find(JIKANTAI_BTN_CLASS_NAME).click #時間帯ボタンをクリック
             when "曜日"
@@ -91,20 +95,31 @@ class ParkingElems
             when "駐車時間"
                 @browser.find(CYUSYAJIKAN_BTN_CLASS_NAME).click #駐車時間ボタンをクリック
             when "サービス情報"
+                if(@isFlap)
+                    sleep 2
+                    return false
+                else
+                    @browser.find(SERVICEINFO_BTN_CLASS_NAME).click #サービス券ボタンをクリック
+                end
             end
+
+            @browser.find(SYUKEIBI_M_START_TXT_CLASS_NAME).send_keys(attr[:date])#請求開始の日付を入力
+            if(@browser.isExist(SEIKYU_BTN_CLASS_NAME))
+                unless @browser.find(SEIKYU_BTN_CLASS_NAME).selected?
+                    @browser.find(SEIKYU_BTN_CLASS_NAME).click #請求にチェック
+                end
+            end
+            
+            @browser.find(SHOW_GRAPH_BTN_CLASS_NAME).click #グラフ表示ボタンクリック
 
             
-            @browser.find(SYUKEIBI_M_START_TXT_CLASS_NAME).send_keys(attr[:date])#請求開始の日付を入力
-            unless @browser.find(SEIKYU_BTN_CLASS_NAME).selected?
-                @browser.find(SEIKYU_BTN_CLASS_NAME).click #請求にチェック
-            end
-
-            @browser.find(SHOW_GRAPH_BTN_CLASS_NAME).click #グラフ表示ボタンクリック
 
             unless pdf_download
                 p "PDFの保存に失敗しました"
                 return false
             end
+
+            sleep 2
 
         rescue => exception
             p exception.class 
