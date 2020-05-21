@@ -1,8 +1,8 @@
 {
-    "URL" : "https://www.i-barms.net/ibarms/Login.do",
-    "id" : "admin_wo01",
-    "pass" : "ws202004",
+    "URL" : "YOUR URL",
+    "id" : "ID",
+    "pass" : "PASS",
     "target-m" : "2020/01",
     "target-d" : "2020/05/01",
-    "download-dir" : "/Users/okadatetsuhei/Downloads/"
+    "download-dir" : "DOWNLOAD DIR"
 }
