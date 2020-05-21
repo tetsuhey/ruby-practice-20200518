@@ -56,6 +56,10 @@ class Browser
         @driver.quit
     end
 
+    def reflesh
+        @driver.navigate.refresh
+    end
+
     def wait(obj)
         cnt = 0
         ret = true
@@ -74,7 +78,6 @@ class Browser
             else
                 sleep 1
                 cnt += 1
-                p "ロード中..."
             end
         end
         return ret
@@ -90,13 +93,24 @@ class Browser
         end
     end
 
+    def isDisplayed(target)
+        if !isExist(target)
+            return false
+        end
+        obj = find(target, false)
+        if(obj.displayed?)
+            return true
+        else
+            return false
+        end
+    end
+
 
     def loading_wait(target)
         timeout = 0
         isload = false
         loop do
             if(isExist(target))
-                p "ロード中..."
                 sleep 1
                 timeout += 1
                 if(timeout > TIME_OUT)
@@ -124,6 +138,18 @@ class Browser
         return isTarget
     end
 
+    def find_back_btn(btns)
+        btns.each do |btn|
+            btn.find_elements(:css => "span.panel-title").each do |span|
+                spn_txt = span.attribute("textContent").to_s.gsub(" ","")
+                if(spn_txt == "駐車場一覧")
+                    return btn
+                end
+            end
+            
+        end
+    end
+
     def get_child_obj(target, parent_obj)
         return find(target, true, parent_obj)
     end
@@ -135,6 +161,6 @@ class Browser
 end
 
 
-class Elements
-    @elem
+class Browser_Controller < Browser
+    
 end
