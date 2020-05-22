@@ -1,8 +1,8 @@
 {
     "URL" : "YOUR URL",
-    "id" : "ID",
-    "pass" : "PASS",
+    "id" : "YOUR ID",
+    "pass" : "YOUR PASS",
     "target-m" : "2020/01",
     "target-d" : "2020/05/01",
-    "download-dir" : "DOWNLOAD DIR"
+    "download-dir" : "YOUR DOWNLOAD DIR"
 }

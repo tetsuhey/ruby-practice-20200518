@@ -1,5 +1,6 @@
 require 'json'
 require 'csv'
+require 'fileutils'
 
 SETTING_FILE_PATH = "./tmp/"
 SETTING_FILE_NAME = "setting.json"
@@ -59,4 +60,34 @@ class Error_File_Out_Putter
         file.close
     end
 
+end
+
+
+class DL_Files
+
+    def initialize
+        @sf = JSON.load(File.open(SETTING_FILE_PATH+SETTING_FILE_NAME))
+        @file_path = @sf["download-dir"]
+        date = DateTime.now
+        @report_dir_name = date.strftime("%Y%m%d").to_s + "_収集データ"
+        unless Dir.exist? (@file_path + @report_dir_name)
+            Dir.mkdir(@file_path + @report_dir_name)
+        end
+    end
+
+    def mv_file_to_dir(p_name, mode)
+        # /Downloads/YYYYMMDD_収集データ/PARKING NAME/
+        target_dir_name = @file_path + @report_dir_name + "/" + p_name + "/"
+        unless Dir.exist? (target_dir_name)
+            #駐車場名のフォルダがない場合は作成
+            Dir.mkdir(target_dir_name)
+        end
+
+        #移動対象のファイル名
+        names = File.join(@file_path, mode + "*.pdf") #移動対象のファイル名
+        Dir.glob(names).each do |path|
+            #駐車場名のフォルダ内に移動する
+            File.rename(path, target_dir_name + File.basename(path))
+        end
+    end
 end
